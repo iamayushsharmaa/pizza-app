@@ -4,8 +4,8 @@ import 'package:rxdart/rxdart.dart';
 
 import 'entities/entities.dart';
 import 'models/user.dart';
-import 'user_repo.dart';
 import 'dart:developer';
+import 'user_repo.dart';
 
 class FirebaseUserRepo implements UserRepository{
 
