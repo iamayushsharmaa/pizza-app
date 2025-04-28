@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
@@ -7,6 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import 'entities/entities.dart';
 import 'models/user.dart';
 import 'user_repo.dart';
+import 'dart:developer';
 
 class FirebaseUserRepo implements UserRepository{
 
@@ -23,16 +22,13 @@ class FirebaseUserRepo implements UserRepository{
   }
 
   @override
-  Future<void> setUserData(MyUser myUser, String password) {
+  Future<void> setUserData(MyUser myUser, String password) async{
     try{
-      UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(
-          email: myUser.email,
-          password: password
-      );
-      myUser.userId = user.user!.uid;
-      return myUser;
+      await userCollection
+          .doc(myUser.userId)
+          .set(myUser.toEntity().toDocument());
     } catch(e) {
-      log(e.toString( ));
+      log(e.toString());
       rethrow;
     }
   }
@@ -60,7 +56,7 @@ class FirebaseUserRepo implements UserRepository{
       myUser.userId = user.user!.uid;
       return myUser;
     } catch(e) {
-      log(e.toString( ));
+      log(e.toString());
       rethrow;
     }
   }
