@@ -65,7 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: MyTextfields(
                   controller: emailController,
-                  hintText: 'Email',
+                  hintText: 'Password',
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: const Icon(CupertinoIcons.mail_solid),
@@ -73,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   validator: (val) {
                     if(val!.isEmpty){
                       return 'Please fill in this field';
-                    } else if(!RegExp){
+                    } else if(!RegExp(r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$&*~]).{8,}$').hasMatch(val)){
                       return 'Please enter a valid password';
                     }
                     return null;
